@@ -233,6 +233,9 @@ of enumeration (alternatives to named tuples) through inheritance.
 In my career as a software engineer I have made many mistakes.  All too often
 those mistakes involved inheritance.  This design reflects that experience.
 
+In addition, this code supports alternative implicit values (eg. bit fields)
+and, by default, flags an error on duplicates.
+
 I realise that one day's work is unlikely to have captured all the subtleties
 of the problem; that some of the complexity of the standard Enum is
 justified and will, in time and with bug fixes, clutter this project.  But I
