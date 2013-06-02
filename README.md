@@ -23,6 +23,9 @@ A simpler Enum for Python 3.
 Getting Started
 ---------------
 
+Install `simple-enum` from
+[PyPI](https://pypi.python.org/pypi/simple-enum/0.0.0):
+
 ```sh
 easy_install simple-enum
 ```

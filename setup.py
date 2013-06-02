@@ -14,8 +14,7 @@ setup(
                    'Intended Audience :: Developers',
                    'License :: Public Domain',
                    'Programming Language :: Python :: 3',
-                   'Topic :: Software Development :: Libraries'
-                   'Topic :: Software Development'],
+                   'Topic :: Software Development :: Libraries'],
     long_description = '''
 What Does Simple Enum Do?
 --------------------------
