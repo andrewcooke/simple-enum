@@ -227,7 +227,7 @@ So, after three weeks of work, I stopped.  The next day I wrote
 
 ### Differences With Enum
 
-This project different from
+This project differs from
 [PEP-0345](http://www.python.org/dev/peps/pep-0435/)'s Enum in two important
 ways.
 
