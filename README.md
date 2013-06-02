@@ -7,6 +7,9 @@ A simpler Enum for Python.
   * [The Dictionary Point Of View](#the-dictionary-point-of-view)
   * [The Named Tuple Point Of View](#the-named-tuple-point-of-view)
   * [That's It, Really](#thats-it-really)
+* [Advanced Use](#advanced-use)
+  * [Retrieving Tuples](#retrieving-tuples)
+  * [Providing Implicit Values](#providing-implicit-values)
 
 Getting Started
 ---------------
@@ -101,3 +104,23 @@ Weekday(name='wednesday', value=3)
 thursday
 ```
 
+### Providing Implicit Values
+
+The `values` parameter expects a no-argument function (called once per class
+definition), which returns a second function from names to values.
+
+So, for example, to give random values:
+
+```python
+>>> from random import random
+>>> def random_values():
+...     def value(name):
+...         return random()
+...     return value
+...
+>>> class Random(Enum, values=random_values):
+...     a, b, c
+...
+>>> list(Random)
+[Random(name='a', value=0.49267653329514594), Random(name='b', value=0.5521902021074088), Random(name='c', value=0.5540234367417308)]
+```
