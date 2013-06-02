@@ -6,7 +6,7 @@ setup(
     url = 'https://github.com/andrewcooke/simple-enum',
     packages = ['simplenum'],
     package_dir = {'': 'src'},
-    version = '0.0.0',
+    version = '0.0.1',
     description = 'A simpler Enum for Python 3',
     author = 'Andrew Cooke',
     author_email = 'andrew@acooke.org',
