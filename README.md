@@ -162,11 +162,11 @@ Discussion
 
 ### Background
 
-Some time ago I wrote a rather
+Some time ago I wrote an
 [intemperate rant](#http://www.acooke.org/cute/Pythonssad0.html) about the
-[standard Enum](http://www.python.org/dev/peps/pep-0435/) for Python.
+[standard Enum](http://www.python.org/dev/peps/pep-0435/) for Python 3.
 
-To atone myself I started to modify the
+Afterwards, I felt guilty.  So, to atone myself, I started to modify the
 [code](https://bitbucket.org/stoneleaf/ref435), adding features that I felt
 missing from the original.  The result was
 [bnum](https://github.com/andrewcooke/bnum).
