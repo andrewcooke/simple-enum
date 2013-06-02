@@ -13,6 +13,7 @@ A simpler Enum for Python.
   * [Providing Explicit Values](#providing-explicit-values)
 * [Discussion](#discussion)
   * [Background](#background)
+  * [Differences With Enum](#differences-with-enum)
 
 Getting Started
 ---------------
@@ -178,3 +179,14 @@ Instead, I was adding features to an already over-complex design.
 
 So, after three weeks of work, I stopped.  The next day I wrote this.
 
+### Differences With Enum
+
+This project different from PEP-0345's Enum in two important ways.
+
+The typical end-user will notice that the API defaults to implicit values.
+This is because I feel the most common case for an Enum requires nothing more
+than a set of names.  That case should be as simple as possible.
+
+The Enum expert will see that I have made no effort to support inheritance.
+In my career as a software engineer I have made many mistakes.  All too often
+those mistakes involved inheritance.  This design reflects that experience.
