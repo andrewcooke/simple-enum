@@ -37,14 +37,6 @@ def dunder(name):
 
 
 class ClassDict(OrderedDict):
-    '''
-    The dictionary supplied by EnumMeta to store the class contents.  We
-    provide a default value when implicit is true, and allow implicit to
-    be enabled via "with implicit".
-
-    An ordered dict is needed to preserve the order of side-effects (things
-    like which alias is preferred).
-    '''
 
     def __init__(self, implicit=False, values=names):
         super().__init__()

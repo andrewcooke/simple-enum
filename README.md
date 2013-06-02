@@ -15,6 +15,7 @@ A simpler Enum for Python 3.
   * [Background](#background)
   * [Differences With Enum](#differences-with-enum)
   * [Credits](#credits)
+* [Legalities](#legalities)
 
 Getting Started
 ---------------
@@ -205,3 +206,9 @@ the design space.
 
 Thanks to Ethan Furman, who graciously shared his code and so educated me on
 the subtleties of Python meta-class protocols.
+
+Legalities
+----------
+
+(c) 2013 Andrew Cooke, [andrew@acooke.org](mailto://andrew@acooke.org);
+released into the public domain for any use, but with absolutely no warranty.
