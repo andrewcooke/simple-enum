@@ -222,7 +222,8 @@ consistent, elegant design that I was
 [advocating](#https://github.com/andrewcooke/bnum#why-not-influence-the-official-design).
 Instead, I was adding features to an already over-complex project.
 
-So, after three weeks of work, I stopped.  The next day I wrote this.
+So, after three weeks of work, I stopped.  The next day I wrote
+[this](https://github.com/andrewcooke/simple-enum/blob/master/src/simplenum/__init__.py).
 
 ### Differences With Enum
 
