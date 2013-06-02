@@ -256,7 +256,7 @@ Thanks to Ethan Furman, who graciously shared his code and so educated me on
 the subtleties of Python meta-class protocols.
 
 [Duncan Booth](http://www.acooke.org/cute/Pythonssad0.html#Fri17May20131519040100)
-provided the implicit values hack *and* the motivation to question my betters.
+provided the implicit values hack *and* the motivation to question authority.
 
 Legalities
 ----------
