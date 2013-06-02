@@ -15,7 +15,7 @@ A simpler Enum for Python 3.
 * [Discussion](#discussion)
   * [Background](#background)
   * [Differences With Enum](#differences-with-enum)
-  * [Derails](#details)
+  * [Details](#details)
   * [Credits](#credits)
 * [Legalities](#legalities)
 
