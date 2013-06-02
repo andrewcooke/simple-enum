@@ -192,3 +192,15 @@ than a set of names.  That case should be as simple as possible.
 The Enum expert will see that I have made no effort to support inheritance.
 In my career as a software engineer I have made many mistakes.  All too often
 those mistakes involved inheritance.  This design reflects that experience.
+
+I realise that one day's work is unlikely to have captured all the subtleties
+of the problem; that some of the complexity of the standard Enum is
+justified and will, in time and with bug fixes, appear here too.  But I hope
+that I have found something of value in the balance of features here, and
+that others will appreciate the view from this particular local maximum of
+the design space.
+
+### Credit
+
+Thanks to Ethan Furman, who graciously shared his code and so educated me on
+the subtleties of Python meta-class protocols.
