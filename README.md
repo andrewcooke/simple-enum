@@ -15,7 +15,7 @@ A simpler Enum for Python 3.
 * [Discussion](#discussion)
   * [Background](#background)
   * [Differences With Enum](#differences-with-enum)
-  * [Things You Can Do With The Simpler Enum (That You Can't Do With The Standard Enum)](#things-you-can-do-with-the-simpler-enum-that-you-cant-do-with-the-standard-enum))
+  * [TYCDWTSE (TYCDWTSE)](#things-you-can-do-with-the-simpler-enum-that-you-cant-do-with-the-standard-enum))
   * [Technical Details](#technical-details)
   * [Credits](#credits)
 * [Legalities](#legalities)
