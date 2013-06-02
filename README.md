@@ -86,3 +86,18 @@ The two points of view are consistent - you can mix and match as you please.
 
 OK, so there is a little more below.  But in most cases the above should be
 all you need.
+
+Advanced Use
+------------
+
+### Retrieving Tuples
+
+If you have a name, or value, you can get the tuple by calling the class:
+
+```python
+>>> Weekday('wednesday')
+Weekday(name='wednesday', value=3)
+>>> Weekday(value=4).name
+thursday
+```
+
