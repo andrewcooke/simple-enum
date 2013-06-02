@@ -169,7 +169,7 @@ You can even go wild and mix things up (here we're using bit-fields via `bits`):
 6
 ```
 
-## Aliases
+### Aliases
 
 By default, it is an error to repeat a value:
 
