@@ -4,6 +4,14 @@ from itertools import count
 from types import MappingProxyType
 
 
+'''
+A simpler enumeration for Python 3.
+
+(c) 2013 Andrew Cooke, andrew@acooke.org;
+released into the public domain for any use, but with absolutely no warranty.
+'''
+
+
 def names():
     '''Provide a value for each enum which is the name itself.'''
     def value(name):
@@ -22,8 +30,11 @@ def from_counter(start, step=1):
 
 from_one = from_counter(1)
 from_one.__doc__ = 'Provide a value for each enum that counts from one.'
+from_one.__name__ = 'from_one'
+
 from_zero = from_counter(0)
 from_zero.__doc__ = 'Provide a value for each enum that counts from zero.'
+from_zero.__name__ = 'from_zero'
 
 def bits():
     '''Provide a value for each enum that is a distinct bit (1, 2, 4, etc).'''
@@ -96,21 +107,33 @@ class ClassDict(OrderedDict):
 
 
 class EnumMeta(type):
+    '''
+    This does three main things: (1) it manages the construction of both
+    the Enum class and its sub-classes via `__prepare__` and `__new__`;
+    (2) it delegates the `dict` API to the `cls._enums` member so that
+    classes look like dictionaries; (3) it provides retrieval of named tuples
+    via `__call__`.
+    '''
 
     def __init__(metacls, cls, bases, dict, **kargs):
+        '''Called during class construction.  Drop kargs.'''
         super().__init__(cls, bases, dict)
 
     @classmethod
     def __prepare__(metacls, name, bases, implicit=True, values=names, **kargs):
+        '''Provide the class dictionary (which provides implicit values).'''
         return ClassDict(implicit=implicit, values=values())
 
     def __new__(metacls, name, bases, prepared, allow_aliases=False, **kargs):
+        '''Create the class and then the named tuples, saving the latter in
+        the former.'''
         enums, others = prepared.split()
         cls = super().__new__(metacls, name, bases, others)
         cls._enums_by_name, cls._enums_by_value = {}, OrderedDict()
         for name in enums:
             value = enums[name]
             enum = cls.__new__(cls, name, value)
+            # handle aliases
             if value in cls._enums_by_value:
                 if allow_aliases:
                     cls._enums_by_name[name] = cls._enums_by_value[value]
@@ -120,11 +143,13 @@ class EnumMeta(type):
             else:
                 cls._enums_by_value[value] = enum
                 cls._enums_by_name[name] = enum
+        # build the delegate from values as that does not include aliases
         cls._enums = MappingProxyType(
                         OrderedDict((enum.name, enum.value)
                                     for enum in cls._enums_by_value.values()))
         return cls
 
+    # Delegate dictionary methods.
     def __contains__(cls, name): return cls._enums.__contains__(name)
     def __iter__(cls): return cls._enums.__iter__()
     def __getitem__(cls, name): return cls._enums.__getitem__(name)
@@ -132,13 +157,19 @@ class EnumMeta(type):
     def values(cls): return cls._enums.values()
 
     def items(cls):
+        '''This can be seen in two ways.  As a dictionary method it returns
+        `(name, value)` pairs.  But it also returns a list of named tuples
+        that are the enumerations themselves.'''
         return iter(cls._enums_by_value[value] for value in cls._enums_by_value)
 
     def __getattr__(cls, name):
+        '''Provide access to named tuples.'''
         try: return cls._enums_by_name[name]
         except KeyError: raise AttributeError(name)
 
     def __call__(cls, name=None, value=None):
+        '''Retrieve named tuples by name or value.  We also special case
+        calling with an existing instance.'''
         if type(name) is cls:
             if value is None or value == name.value: return name
         elif value is None:
@@ -157,10 +188,14 @@ class EnumMeta(type):
 
 
 class Enum(namedtuple('Enum', 'name, value'), metaclass=EnumMeta):
+    '''
+    The super class for enumerations.  The body of sub-classes should
+    typically contain a list of enumeration names.
+    '''
 
     def __new__(cls, *args, **kwargs):
-        # this is called on creation and by pickle.  we try __call__ first
-        # so that unpickling retrieves an existing instance.  if that fails
-        # then we create a new instance.
+        '''Called on instance creation and by pickle.  We try __call__ first
+        so that unpickling retrieves an existing instance.  If that fails
+        then we create a new instance.'''
         try: return cls.__call__(*args, **kwargs)
         except ValueError: return super().__new__(cls, *args, **kwargs)
