@@ -118,10 +118,10 @@ class EnumMeta(type):
         except KeyError:
             raise AttributeError(name)
 
-    def __call__(cls, value=None, name=None):
-        if type(value) is cls:
-            if name is None or name == value.name:
-                return value
+    def __call__(cls, name=None, value=None):
+        if type(name) is cls:
+            if value is None or value == name.value:
+                return name
         elif value is None:
             if name is None:
                 raise ValueError('Give name or value')

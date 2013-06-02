@@ -53,12 +53,14 @@ An Enum is a ordered, immutable set of named tuples:
 ...     green
 ...     blue
 ...
->>> isinstance(Colour.red, Colour)
-True
->>> issubclass(Colour, tuple)
-True
 >>> Colour.red
 Colour(name='red', value='red')
->>> Colour('red')
-Colour(name='red', value='red')
+>>> Colour.red.name
+'red'
+>>> list(Colour.items())
+[Colour(name='red', value='red'), Colour(name='green', value='green'), Colour(name='blue', value='blue')]
+>>> isinstance(Colour.red, tuple)
+True
+>>> isinstance(Colour.red, Colour)
+True
 ```

@@ -18,7 +18,7 @@ class Examples(TestCase):
         assert Colour.red.name == Colour.red.value == 'red'
         assert Colour.red == Colour(Colour.red) == Colour('red') == \
                Colour(name='red') == Colour(value='red') == \
-               Colour(value='red', name='red')
+               Colour(name='red', value='red')
         assert Colour.red == list(Colour.items())[0]
         with self.assertRaises(ValueError):
             Colour(value='red', name='blue')
@@ -27,6 +27,7 @@ class Examples(TestCase):
         assert str(Colour.red) == "Colour(name='red', value='red')", str(Colour.red)
         assert repr(Colour.red) == "Colour(name='red', value='red')", repr(Colour.red)
         assert str(list(Colour)) == "['red', 'green', 'blue']", str(list(Colour))
+        assert str(list(Colour.items())) == "", str(list(Colour.items()))
 
         for (name, value) in Colour.items():
             assert name in Colour
