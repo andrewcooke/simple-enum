@@ -24,6 +24,7 @@ class Examples(TestCase):
             Colour(value='pink')
         assert str(Colour.red) == "Colour(name='red', value='red')", str(Colour.red)
         assert repr(Colour.red) == "Colour(name='red', value='red')", repr(Colour.red)
+        assert str(list(Colour)) == "['red', 'green', 'blue']", str(list(Colour))
 
         for (name, value) in Colour.items():
             assert name in Colour
@@ -37,9 +38,11 @@ class Examples(TestCase):
         class Weekday(Enum, values=from_one):
             monday, tuesday, wednesday, thursday, friday, saturday, sunday
 
-        print(list(Weekday.items()))
+        assert str(list(Weekday)) == "['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']", str(list(Weekday))
         assert Weekday.monday.value == 1
         assert Weekday['tuesday'] == 2
+        with self.assertRaises(TypeError):
+            Weekday['montag'] = 8
 
 
     def test_emphasis(self):
