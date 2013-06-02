@@ -14,6 +14,7 @@ A simpler Enum for Python.
 * [Discussion](#discussion)
   * [Background](#background)
   * [Differences With Enum](#differences-with-enum)
+  * [Credits](#credits)
 
 Getting Started
 ---------------
@@ -200,7 +201,7 @@ that I have found something of value in the balance of features here, and
 that others will appreciate the view from this particular local maximum of
 the design space.
 
-### Credit
+### Credits
 
 Thanks to Ethan Furman, who graciously shared his code and so educated me on
 the subtleties of Python meta-class protocols.
