@@ -33,7 +33,7 @@ By default, the values in the dictionary are the names:
 'red'
 ```
 
-but you can easily change that:
+but you can change that using `values`:
 
 ```python
 >>> class Weekday(Enum, values=from_one):
