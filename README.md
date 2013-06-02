@@ -45,7 +45,7 @@ but you can change that using `values`:
 
 ### The Named Tuple Point Of View
 
-An Enum is a ordered, immutable set of named tuples:
+An Enum is *also* an ordered, immutable set of named tuples:
 
 ```python
 >>> class Colour(Enum):
@@ -59,8 +59,18 @@ Colour(name='red', value='red')
 'red'
 >>> list(Colour.items())
 [Colour(name='red', value='red'), Colour(name='green', value='green'), Colour(name='blue', value='blue')]
->>> isinstance(Colour.red, tuple)
-True
 >>> isinstance(Colour.red, Colour)
 True
+```
+
+As before, you can change the values:
+
+```python
+>>> class Weekday(Enum, values=from_one):
+...     monday, tuesday, wednesday, thursday, friday, saturday, sunday
+...
+>>> Weekday.monday.value
+1
+>>> Weekday.tuesday
+Weekday(name='tuesday', value=2)
 ```
