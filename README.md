@@ -1,7 +1,7 @@
 simple-enum
 ===========
 
-A simpler Enum for Python.
+A simpler Enum for Python 3.
 
 * [Getting Started](#getting-started)
   * [The Dictionary Point Of View](#the-dictionary-point-of-view)
