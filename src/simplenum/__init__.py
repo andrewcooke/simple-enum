@@ -5,11 +5,13 @@ from types import MappingProxyType
 
 
 def names():
+    '''Provide a value for each enum which is the name itself.'''
     def value(name):
         return name
     return value
 
 def from_counter(start, step=1):
+    '''Provide a value for each enum from a counter.'''
     def outer():
         counter = count(start, step)
         def value(name):
@@ -19,9 +21,12 @@ def from_counter(start, step=1):
     return outer
 
 from_one = from_counter(1)
+from_one.__doc__ = 'Provide a value for each enum that counts from one.'
 from_zero = from_counter(0)
+from_zero.__doc__ = 'Provide a value for each enum that counts from zero.'
 
 def bits():
+    '''Provide a value for each enum that is a distinct bit (1, 2, 4, etc).'''
     count = 0
     def value(name):
         nonlocal count
@@ -29,27 +34,39 @@ def bits():
         return 2 ** (count - 1)
     return value
 
-
+# Used to detect EnumMeta creation in the dict.  If Enum is false then we
+# disable implicit values.
 Enum = None
 
 def dunder(name):
+    '''Test for special names.'''
     return name[:2] == name[-2:] == '__'
 
 
 class ClassDict(OrderedDict):
+    '''
+    This is the dictionary used while creating Enum instances.  It provides
+    default values when `implicit` is true.  This can either be enabled by
+    default, or within a `with` context.
+    '''
 
     def __init__(self, implicit=False, values=names):
+        '''Setting `implicit` will provide default values from `values`.'''
         super().__init__()
         self.implicit = implicit
         self.values = values
 
     def __enter__(self):
+        '''Enable implicit values within a `with` context.'''
         self.implicit = True
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        '''Disable implicit values on leaving a `with` context.'''
         self.implicit = False
 
     def __getitem__(self, name):
+        '''Provide an item from the dictionary.  Values are created if
+        `implicit` is currently true.'''
         if name not in self:
             if self.implicit and Enum and not dunder(name):
                 super().__setitem__(name, self.values(name))
@@ -58,17 +75,23 @@ class ClassDict(OrderedDict):
         return super().__getitem__(name)
 
     def __setitem__(self, name, value):
+        '''Set a value in the dictionary.  Setting is disabled for user
+        values (not dunders) if `implicit` is true.  This helps avoid
+        confusion from expressions involving shadowed global names.'''
         if self.implicit and Enum and not dunder(name):
             raise TypeError('Cannot use explicit value for %s' % name)
         return super().__setitem__(name, value)
 
     def split(self):
+        '''Separate the enums from the special values (dunders and
+        descriptors; we assume the latter are methods).'''
         enums, others = OrderedDict(), dict()
         for name in self:
-            if dunder(name):
-                others[name] = self[name]
+            value = self[name]
+            if dunder(name) or hasattr(value, '__get__'):
+                others[name] = value
             else:
-                enums[name] = self[name]
+                enums[name] = value
         return enums, others
 
 
@@ -112,32 +135,23 @@ class EnumMeta(type):
         return iter(cls._enums_by_value[value] for value in cls._enums_by_value)
 
     def __getattr__(cls, name):
-        try:
-            return cls._enums_by_name[name]
-        except KeyError:
-            raise AttributeError(name)
+        try: return cls._enums_by_name[name]
+        except KeyError: raise AttributeError(name)
 
     def __call__(cls, name=None, value=None):
         if type(name) is cls:
-            if value is None or value == name.value:
-                return name
+            if value is None or value == name.value: return name
         elif value is None:
-            if name is None:
-                raise ValueError('Give name or value')
-            elif name in cls._enums_by_name:
-                return cls._enums_by_name[name]
-            else:
-                raise ValueError('No name %r' % name)
+            if name is None: raise ValueError('Give name or value')
+            if name in cls._enums_by_name: return cls._enums_by_name[name]
+            raise ValueError('No name %r' % name)
         elif name is None:
-            if value in cls._enums_by_value:
-                return cls._enums_by_value[value]
-            else:
-                raise ValueError('No value %r' % value)
+            if value in cls._enums_by_value: return cls._enums_by_value[value]
+            raise ValueError('No value %r' % value)
         elif name in cls._enums_by_name:
             enum = cls._enums_by_name[name]
             if value in cls._enums_by_value and \
-                        enum is cls._enums_by_value[value]:
-                return enum
+                        enum is cls._enums_by_value[value]: return enum
         raise ValueError('Inconsistent name (%r) and value (%r)' %
                         (name, value))
 
@@ -148,7 +162,5 @@ class Enum(namedtuple('Enum', 'name, value'), metaclass=EnumMeta):
         # this is called on creation and by pickle.  we try __call__ first
         # so that unpickling retrieves an existing instance.  if that fails
         # then we create a new instance.
-        try:
-            return cls.__call__(*args, **kwargs)
-        except ValueError:
-            return super().__new__(cls, *args, **kwargs)
+        try: return cls.__call__(*args, **kwargs)
+        except ValueError: return super().__new__(cls, *args, **kwargs)

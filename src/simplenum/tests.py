@@ -88,3 +88,31 @@ class PickleTest(TestCase):
     def test_pickle(self):
         assert Pickle.red is loads(dumps(Pickle.red))
         assert Pickle is loads(dumps(Pickle))
+
+
+class MethodTest(TestCase):
+    '''This isn't a particularly good idea.'''
+
+    def test_methods(self):
+
+        class Animal(Enum, implicit=False):
+
+            @property
+            def legs(self):
+                return self.value[0]
+
+            @property
+            def sound(self):
+                return self.value[1]
+
+            def talk(self):
+                return self.sound
+
+            def __str__(self):
+                return '%s has %d legs and says %s' % \
+                       (self.name, self.legs, self.talk())
+
+            pig = 4, 'oink'
+            hen = 2, 'cluck'
+
+        assert str(Animal.pig) == "pig has 4 legs and says oink", str(Animal.pig)
