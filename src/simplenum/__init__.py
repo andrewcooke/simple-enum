@@ -1,7 +1,7 @@
 
-from collections import OrderedDict
+from collections import OrderedDict, namedtuple
 from itertools import count
-from operator import itemgetter
+from types import MappingProxyType
 
 
 def names():
@@ -31,7 +31,10 @@ def bits():
 
 
 Enum = None
-SPECIAL_FIELDS = {'__module__', '__qualname__'}
+
+def dunder(name):
+    return name[:2] == name[-2:] == '__'
+
 
 class ClassDict(OrderedDict):
     '''
@@ -54,32 +57,91 @@ class ClassDict(OrderedDict):
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.implicit = False
 
-    def __getitem__(self, item):
-        if self.implicit and Enum:
-            if item not in self:
-                super().__setitem__(item, self.values(item))
-        else:
-            if item not in self and item == 'implicit':
+    def __getitem__(self, name):
+        if name not in self:
+            if self.implicit and Enum and not dunder(name):
+                super().__setitem__(name, self.values(name))
+            elif name == 'implicit':
                 return self
-        return super().__getitem__(item)
+        return super().__getitem__(name)
 
     def __setitem__(self, name, value):
-        if self.implicit and Enum and name not in SPECIAL_FIELDS:
+        if self.implicit and Enum and not dunder(name):
             raise TypeError('Cannot use explicit value for %s' % name)
         return super().__setitem__(name, value)
+
+    def split(self):
+        enums, others = OrderedDict(), dict()
+        for name in self:
+            if dunder(name):
+                others[name] = self[name]
+            else:
+                enums[name] = self[name]
+        return enums, others
 
 
 class EnumMeta(type):
 
+    def __init__(metacls, cls, bases, dict, **kargs):
+        super().__init__(cls, bases, dict)
+
     @classmethod
-    def __prepare__(metacls, name, bases,
-                    implicit=True, values=names, allow_aliases=False):
+    def __prepare__(metacls, name, bases, implicit=True, values=names, **kargs):
         return ClassDict(implicit=implicit, values=values())
 
+    def __new__(metacls, name, bases, prepared, allow_aliases=False, **kargs):
+        enums, others = prepared.split()
+        cls = super().__new__(metacls, name, bases, others)
+        cls._enums_by_name, cls._enums_by_value = {}, OrderedDict()
+        for name in enums:
+            value = enums[name]
+            enum = cls.__new__(cls, name, value)
+            cls._enums_by_value[value] = enum
+            cls._enums_by_name[name] = enum
+        cls._enums = MappingProxyType(
+                        OrderedDict((enum.name, enum.value)
+                                    for enum in cls._enums_by_value.values()))
+        return cls
 
-class Enum(tuple, metaclass=EnumMeta):
+    def __contains__(cls, name): return cls._enums.__contains__(name)
+    def __iter__(cls): return cls._enums.__iter__()
+    def __getitem__(cls, name): return cls._enums.__getitem__(name)
+    def keys(cls): return cls._enums.keys()
+    def values(cls): return cls._enums.values()
 
-    __slots__ = ()
+    def items(cls):
+        return iter(cls._enums_by_value[value] for value in cls._enums_by_value)
 
-    name = property(itemgetter(0), doc='Enum name')
-    value = property(itemgetter(1), doc='Enum value')
+    def __getattr__(cls, name):
+        try:
+            return cls._enums_by_name[name]
+        except KeyError:
+            raise AttributeError(name)
+
+    def __call__(cls, value=None, name=None):
+        if type(value) is cls:
+            if name is None or name == value.name:
+                return value
+        elif value is None:
+            if name is None:
+                raise ValueError('Give name or value')
+            elif name in cls._enums_by_name:
+                return cls._enums_by_name[name]
+            else:
+                raise ValueError('No name %r' % name)
+        elif name is None:
+            if value in cls._enums_by_value:
+                return cls._enums_by_value[value]
+            else:
+                raise ValueError('No value %r' % value)
+        elif name in cls._enums_by_name:
+            enum = cls._enums_by_name[name]
+            if value in cls._enums_by_value and \
+                        enum is cls._enums_by_value[value]:
+                return enum
+        raise ValueError('Inconsistent name (%r) and value (%r)' %
+                        (name, value))
+
+
+class Enum(namedtuple('Enum', 'name, value'), metaclass=EnumMeta):
+    pass
