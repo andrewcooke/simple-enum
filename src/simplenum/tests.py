@@ -13,6 +13,8 @@ class Examples(TestCase):
             blue
 
         assert isinstance(Colour.red, Colour)
+        assert isinstance(Colour.red, tuple)
+        assert issubclass(Colour, tuple)
         assert Colour.red.name == Colour.red.value == 'red'
         assert Colour.red == Colour(Colour.red) == Colour('red') == \
                Colour(name='red') == Colour(value='red') == \

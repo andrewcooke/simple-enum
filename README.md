@@ -43,3 +43,22 @@ but you can change that using `values`:
 1
 ```
 
+### The Named Tuple Point Of View
+
+An Enum is a ordered, immutable set of named tuples:
+
+```python
+>>> class Colour(Enum):
+...     red
+...     green
+...     blue
+...
+>>> isinstance(Colour.red, Colour)
+True
+>>> issubclass(Colour, tuple)
+True
+>>> Colour.red
+Colour(name='red', value='red')
+>>> Colour('red')
+Colour(name='red', value='red')
+```
