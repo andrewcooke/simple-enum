@@ -5,7 +5,7 @@ from types import MappingProxyType
 
 
 '''
-A simpler enumeration for Python 3.
+A simpler Enum for Python 3.
 
 (c) 2013 Andrew Cooke, andrew@acooke.org;
 released into the public domain for any use, but with absolutely no warranty.
