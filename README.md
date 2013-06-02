@@ -208,7 +208,7 @@ Discussion
 
 ### Background
 
-Some time ago I wrote an`
+Some time ago I wrote an
 [intemperate rant](http://www.acooke.org/cute/Pythonssad0.html) about the
 [standard Enum](http://www.python.org/dev/peps/pep-0435/) for Python 3.
 
