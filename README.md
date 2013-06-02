@@ -122,7 +122,7 @@ So, for example, to give random values:
 >>> class Random(Enum, values=random_values):
 ...     a, b, c
 ...
->>> list(Random)
+>>> list(Random.items())
 [Random(name='a', value=0.49267653329514594), Random(name='b', value=0.5521902021074088), Random(name='c', value=0.5540234367417308)]
 ```
 
@@ -146,7 +146,7 @@ You can even go wild and mix things up (here we're using bit-fields via `bits`):
 ```python
 >>> class Emphasis(Enum, values=bits, implicit=False):
 ...     with implicit:
-...        underline, italic, bold
+...         underline, italic, bold
 ...     bold_italic = italic | bold
 ...
 >>> Emphasis.bold_italic.value
