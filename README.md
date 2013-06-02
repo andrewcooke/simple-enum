@@ -15,6 +15,7 @@ A simpler Enum for Python 3.
 * [Discussion](#discussion)
   * [Background](#background)
   * [Differences With Enum](#differences-with-enum)
+  * [Things You Can Do With The Simpler Enum (That You Can't Do With The Standard Enum)](#things-you-can-do-with-the-simpler-enum-that-you-cant-do-with-the-standard-enum))
   * [Technical Details](#technical-details)
   * [Credits](#credits)
 * [Legalities](#legalities)
@@ -242,6 +243,40 @@ justified and will, in time and with bug fixes, clutter this project.  But I
 hope that I have found something of value in the balance of features here, and
 that others will appreciate the view from this particular local maximum of
 the design space.
+
+### Things You Can Do With The Simpler Enum (That You Can't Do With The Standard Enum)
+
+Have a simple list of names in "class" form:
+
+```python
+>>> class Colour(ImplicitBnum):
+...     red
+...     green
+...     blue
+```
+
+Detect a stupid mistake:
+
+```python
+>>> class Error(ExplicitBnum, values=from_one):
+...     with implicit:
+...         one
+...         two
+...     three = 2
+...
+ValueError: Duplicate value for three, two
+```
+
+Define bit fields:
+
+```python
+>>> class IntEmphasis(int, ImplicitBnum, values=bits):
+...     underline
+...     italic
+...     bold
+...
+>>> allowed_styles = IntEmphasis.italic | IntEmphasis.bold
+```
 
 ### Tehcnical Details
 
