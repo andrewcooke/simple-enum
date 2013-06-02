@@ -240,8 +240,9 @@ of enumeration (alternatives to named tuples) through inheritance.
 In my career as a software engineer I have made many mistakes.  All too often
 those mistakes involved inheritance.  This design reflects that experience.
 
-In addition, this code supports alternative implicit values (eg. bit fields)
-and, by default, flags an error on duplicates.
+In addition, this code supports alternative implicit values (eg. bit fields),
+has no support for the "functional" form, and, by default, flags an error on
+duplicates.
 
 I realise that one day's work (even when born from three weeks of frustration)
 is unlikely to have captured all the subtleties of the problem; that some of
