@@ -208,7 +208,7 @@ Discussion
 
 ### Background
 
-Some time ago I wrote an
+Some time ago I wrote an`
 [intemperate rant](http://www.acooke.org/cute/Pythonssad0.html) about the
 [standard Enum](http://www.python.org/dev/peps/pep-0435/) for Python 3.
 
@@ -243,12 +243,12 @@ those mistakes involved inheritance.  This design reflects that experience.
 In addition, this code supports alternative implicit values (eg. bit fields)
 and, by default, flags an error on duplicates.
 
-I realise that one day's work is unlikely to have captured all the subtleties
-of the problem; that some of the complexity of the standard Enum is
-justified and will, in time and with bug fixes, clutter this project.  But I
-hope that I have found something of value in the balance of features here, and
-that others will appreciate the view from this particular local maximum of
-the design space.
+I realise that one day's work (even when born from three weeks of frustration)
+is unlikely to have captured all the subtleties of the problem; that some of
+the complexity of the standard Enum is justified and will, in time and with bug
+fixes, clutter this project.  But I hope that I have found something of value
+in the balance of features here, and that others will appreciate the view from
+this particular local maximum of the design space.
 
 ### Things You Can Do With The Simpler Enum (That You Can't Do With The Standard Enum)
 
