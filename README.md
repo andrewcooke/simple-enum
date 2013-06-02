@@ -271,7 +271,7 @@ Detect a stupid mistake:
 ...         two
 ...     three = 2
 ...
-ValueError: Duplicate value for three, two
+ValueError: Duplicate value (2) for two, three
 ```
 
 Define bit fields:
