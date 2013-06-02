@@ -228,7 +228,8 @@ The typical end-user will notice that the API defaults to implicit values.
 This is because I feel the most common case for an Enum requires nothing more
 than a set of names.  That case should be as simple as possible.
 
-The Enum expert will see that I have made no effort to support inheritance.
+The Enum expert will see that I have made no effort to support other types
+of enumeration (alternatives to named tuples) through inheritance.
 In my career as a software engineer I have made many mistakes.  All too often
 those mistakes involved inheritance.  This design reflects that experience.
 
