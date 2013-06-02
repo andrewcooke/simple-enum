@@ -173,15 +173,17 @@ missing from the original.  The result was
 [bnum](https://github.com/andrewcooke/bnum).
 
 But, as I worked on bnum, I came to see that I was not producing the
-kind of consistent, elegant design that I was
+consistent, elegant design that I was
 [advocating](#https://github.com/andrewcooke/bnum#why-not-influence-the-official-design).
-Instead, I was adding features to an already over-complex design.
+Instead, I was adding features to an already over-complex project.
 
 So, after three weeks of work, I stopped.  The next day I wrote this.
 
 ### Differences With Enum
 
-This project different from PEP-0345's Enum in two important ways.
+This project different from
+[PEP-0345](http://www.python.org/dev/peps/pep-0435/)'s Enum in two important
+ways.
 
 The typical end-user will notice that the API defaults to implicit values.
 This is because I feel the most common case for an Enum requires nothing more
