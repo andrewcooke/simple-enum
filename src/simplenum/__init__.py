@@ -65,7 +65,7 @@ class ClassDict(OrderedDict):
         '''Setting `implicit` will provide default values from `values`.'''
         super().__init__()
         self.implicit = implicit
-        self.values = values
+        self.values = values()
 
     def __enter__(self):
         '''Enable implicit values within a `with` context.'''
@@ -122,7 +122,7 @@ class EnumMeta(type):
     @classmethod
     def __prepare__(metacls, name, bases, implicit=True, values=names, **kargs):
         '''Provide the class dictionary (which provides implicit values).'''
-        return ClassDict(implicit=implicit, values=values())
+        return ClassDict(implicit=implicit, values=values)
 
     def __new__(metacls, name, bases, prepared, allow_aliases=False, **kargs):
         '''Create the class and then the named tuples, saving the latter in
