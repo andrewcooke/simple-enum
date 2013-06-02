@@ -68,7 +68,7 @@ Colour(name='red', value='red')
 True
 ```
 
-As before, you can change the values:
+As before, you can specify the `values`:
 
 ```python
 >>> class Weekday(Enum, values=from_one):
