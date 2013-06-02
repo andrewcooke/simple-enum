@@ -199,3 +199,5 @@ class Enum(namedtuple('Enum', 'name, value'), metaclass=EnumMeta):
         then we create a new instance.'''
         try: return cls.__call__(*args, **kwargs)
         except ValueError: return super().__new__(cls, *args, **kwargs)
+
+    def _make(self): raise TypeError('Enum contents cannot be extended')
