@@ -3,6 +3,10 @@ simple-enum
 
 A simpler Enum for Python.
 
+* [Getting Started](#getting-started)
+  * [The Dictionary Point Of View](#the-dictionary-point-of-view)
+  * [The Named Tuple Point Of View](#the-named-tuple-point-of-view)
+
 Getting Started
 ---------------
 
