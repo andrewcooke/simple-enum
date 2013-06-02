@@ -84,5 +84,5 @@ Weekday(name='tuesday', value=2)
 
 The two points of view are consistent - you can mix and match as you please.
 
-OK, so there is some more below.  But the above should be all you need in
-most cases.
+OK, so there is a little more below.  But in most cases the above should be
+all you need.
