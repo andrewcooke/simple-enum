@@ -174,7 +174,7 @@ You can even go wild and mix things up (here we're using bit-fields via `bits`):
 By default, it is an error to repeat a value:
 
 ```python
->>> class Error(Enum, implicit=None, values=from_one):
+>>> class Error(Enum, implicit=False, values=from_one):
 ...     with implicit:
 ...         one
 ...     another_one = 1
