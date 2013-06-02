@@ -33,6 +33,7 @@ An Enum is an ordered, immutable dictionary.  You only need to provide the
 names:
 
 ```python
+>>> from simplenum import Enum
 >>> class Colour(Enum):
 ...     red
 ...     green
@@ -54,6 +55,7 @@ By default, the dictionary values are the names themselves:
 but you can change that using `values`:
 
 ```python
+>>> from simplenum import from_one
 >>> class Weekday(Enum, values=from_one):
 ...     monday, tuesday, wednesday, thursday, friday, saturday, sunday
 ...
@@ -249,7 +251,7 @@ the design space.
 Have a simple list of names in "class" form:
 
 ```python
->>> class Colour(ImplicitBnum):
+>>> class Colour(Enum):
 ...     red
 ...     green
 ...     blue
@@ -258,7 +260,7 @@ Have a simple list of names in "class" form:
 Detect a stupid mistake:
 
 ```python
->>> class Error(ExplicitBnum, values=from_one):
+>>> class Error(Enum, values=from_one):
 ...     with implicit:
 ...         one
 ...         two
@@ -270,12 +272,12 @@ ValueError: Duplicate value for three, two
 Define bit fields:
 
 ```python
->>> class IntEmphasis(int, ImplicitBnum, values=bits):
+>>> class IntEmphasis(Enum, values=bits):
 ...     underline
 ...     italic
 ...     bold
 ...
->>> allowed_styles = IntEmphasis.italic | IntEmphasis.bold
+>>> allowed_styles = IntEmphasis.italic.value | IntEmphasis.bold.value
 ```
 
 ### Tehcnical Details
