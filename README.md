@@ -11,6 +11,8 @@ A simpler Enum for Python.
   * [Retrieving Tuples](#retrieving-tuples)
   * [Providing Implicit Values](#providing-implicit-values)
   * [Providing Explicit Values](#providing-explicit-values)
+* [Discussion](#discussion)
+  * [Background](#background)
 
 Getting Started
 ---------------
@@ -65,6 +67,8 @@ An Enum is *also* an ordered, immutable set of named tuples:
 >>> Colour.red
 Colour(name='red', value='red')
 >>> Colour.red.name
+'red'
+>>> Colour.red[1]
 'red'
 >>> list(Colour.items())
 [Colour(name='red', value='red'), Colour(name='green', value='green'), Colour(name='blue', value='blue')]
@@ -152,3 +156,25 @@ You can even go wild and mix things up (here we're using bit-fields via `bits`):
 >>> Emphasis.bold_italic.value
 6
 ```
+
+Discussion
+----------
+
+### Background
+
+Some time ago I wrote a rather
+[intemperate rant](#http://www.acooke.org/cute/Pythonssad0.html) about the
+[standard Enum](http://www.python.org/dev/peps/pep-0435/) for Python.
+
+To atone myself I started to modify the
+[code](https://bitbucket.org/stoneleaf/ref435), adding features that I felt
+missing from the original.  The result was
+[bnum](https://github.com/andrewcooke/bnum).
+
+But, as I worked on bnum, I came to see that I was not producing the
+kind of consistent, elegant design that I was
+[advocating](#https://github.com/andrewcooke/bnum#why-not-influence-the-official-design).
+Instead, I was adding features to an already over-complex design.
+
+So, after three weeks of work, I stopped.  The next day I wrote this.
+

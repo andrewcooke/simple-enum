@@ -96,8 +96,15 @@ class EnumMeta(type):
         for name in enums:
             value = enums[name]
             enum = cls.__new__(cls, name, value)
-            cls._enums_by_value[value] = enum
-            cls._enums_by_name[name] = enum
+            if value in cls._enums_by_value:
+                if allow_aliases:
+                    cls._enums_by_name[name] = enum
+                else:
+                    raise ValueError('Duplicate value (%r) for %s and %s' %
+                                     (value, cls._enums_by_value[value].name, name))
+            else:
+                cls._enums_by_value[value] = enum
+                cls._enums_by_name[name] = enum
         cls._enums = MappingProxyType(
                         OrderedDict((enum.name, enum.value)
                                     for enum in cls._enums_by_value.values()))
@@ -144,4 +151,12 @@ class EnumMeta(type):
 
 
 class Enum(namedtuple('Enum', 'name, value'), metaclass=EnumMeta):
-    pass
+
+    def __new__(cls, *args, **kwargs):
+        # this is called on creation and by pickle.  we try __call__ first
+        # so that unpickling retrieves an existing instance.  if that fails
+        # then we create a new instance.
+        try:
+            return cls.__call__(*args, **kwargs)
+        except ValueError:
+            return super().__new__(cls, *args, **kwargs)

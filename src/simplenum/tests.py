@@ -1,3 +1,4 @@
+from pickle import loads, dumps
 from unittest import TestCase
 from simplenum import Enum, from_one, bits
 
@@ -27,13 +28,15 @@ class Examples(TestCase):
         assert str(Colour.red) == "Colour(name='red', value='red')", str(Colour.red)
         assert repr(Colour.red) == "Colour(name='red', value='red')", repr(Colour.red)
         assert str(list(Colour)) == "['red', 'green', 'blue']", str(list(Colour))
-        assert str(list(Colour.items())) == "", str(list(Colour.items()))
+        assert str(list(Colour.items())) == "[Colour(name='red', value='red'), Colour(name='green', value='green'), Colour(name='blue', value='blue')]", str(list(Colour.items()))
 
         for (name, value) in Colour.items():
             assert name in Colour
             assert Colour[name] == value
             assert name in set(Colour.keys())
             assert value in set(Colour.values())
+        assert Colour.red[0] == 'red'
+        assert Colour.red[1] == 'red'
 
 
     def test_weekday(self):
@@ -44,6 +47,7 @@ class Examples(TestCase):
         assert str(list(Weekday)) == "['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']", str(list(Weekday))
         assert Weekday.monday.value == 1
         assert Weekday['tuesday'] == 2
+        assert Weekday.wednesday[1] == 3
         with self.assertRaises(TypeError):
             Weekday['montag'] = 8
 
@@ -61,7 +65,7 @@ class Examples(TestCase):
 
     def test_duplicate(self):
 
-        with self.assertRaises(KeyboardInterrupt):
+        with self.assertRaises(ValueError):
             class Error(Enum, implicit=False):
                 a = 1
                 b = 1
@@ -69,3 +73,13 @@ class Examples(TestCase):
         class Ok(Enum, implicit=False, allow_aliases=True):
             a = 1
             b = 1
+
+
+class Pickle(Enum):
+    red, green, blue
+
+class PickleTest(TestCase):
+
+    def test_pickle(self):
+        assert Pickle.red is loads(dumps(Pickle.red))
+        assert Pickle is loads(dumps(Pickle))
