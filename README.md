@@ -299,7 +299,7 @@ Define bit fields:
 ### Credits
 
 Thanks to Ethan Furman, who graciously shared his code and so educated me on
-the subtleties of Python meta-class protocols.
+the subtleties of the Python meta-class protocol.
 
 [Duncan Booth](http://www.acooke.org/cute/Pythonssad0.html#Fri17May20131519040100)
 provided the implicit values hack *and* the motivation to question authority.
