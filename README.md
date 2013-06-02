@@ -262,6 +262,15 @@ class dictionary contents.  This shadows global names so cannot be used
 to evaluate expressions - but a simple list of names does not require any
 evaluation.
 
+Most of my Python programming (which I admit may be influenced by functional
+languages) uses common, standard data structures.  An enumeration - an
+immutable set of names, with an optional associated set of values - does not
+require anything beyond that.  So "what is a good design?" reduces to "how
+best can I fit enumerations into existing structures?"  A little consideration
+gives two ways to associate names and values: in a dictionary, or as pairs.  A
+little more consideration shows the two can be combined succinctly.  Hence the
+design.
+
 ### Things You Can Do With The Simpler Enum (That You Can't Do With The Standard Enum)
 
 Have a simple list of names in "class" form:
