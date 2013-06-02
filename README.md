@@ -196,8 +196,8 @@ those mistakes involved inheritance.  This design reflects that experience.
 
 I realise that one day's work is unlikely to have captured all the subtleties
 of the problem; that some of the complexity of the standard Enum is
-justified and will, in time and with bug fixes, appear here too.  But I hope
-that I have found something of value in the balance of features here, and
+justified and will, in time and with bug fixes, clutter this project.  But I
+hope that I have found something of value in the balance of features here, and
 that others will appreciate the view from this particular local maximum of
 the design space.
 
