@@ -66,13 +66,18 @@ class Examples(TestCase):
     def test_duplicate(self):
 
         with self.assertRaises(ValueError):
-            class Error(Enum, implicit=False):
-                a = 1
-                b = 1
+            class Error(Enum, implicit=False, values=from_one):
+                with implicit: one
+                another_one = 1
 
-        class Ok(Enum, implicit=False, allow_aliases=True):
-            a = 1
-            b = 1
+        class MulitlingualWeekday(Enum, implicit=False, values=from_one, allow_aliases=True):
+            with implicit:
+                monday, tuesday, wednesday, thursday, friday, saturday, sunday
+            lunes, martes, miercoles, jueves, viernes, sabado, domingo = \
+                monday, tuesday, wednesday, thursday, friday, saturday, sunday
+
+        assert str(MulitlingualWeekday.lunes) == "MulitlingualWeekday(name='monday', value=1)", str(MulitlingualWeekdays.lunes)
+        assert str(MulitlingualWeekday('martes')) == "MulitlingualWeekday(name='tuesday', value=2)", str(MulitlingualWeekdays('lunes'))
 
 
 class Pickle(Enum):

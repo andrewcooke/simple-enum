@@ -90,7 +90,7 @@ class EnumMeta(type):
             enum = cls.__new__(cls, name, value)
             if value in cls._enums_by_value:
                 if allow_aliases:
-                    cls._enums_by_name[name] = enum
+                    cls._enums_by_name[name] = cls._enums_by_value[value]
                 else:
                     raise ValueError('Duplicate value (%r) for %s and %s' %
                                      (value, cls._enums_by_value[value].name, name))
