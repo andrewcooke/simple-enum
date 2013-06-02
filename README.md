@@ -287,7 +287,7 @@ Define bit fields:
 
 ### Technical Details
 
-The consistency for the two viewpoints (dict and named tuples) hinges on
+The consistency of the two viewpoints (dict and named tuples) hinges on
 the method `dict.items()`, which returns `(name, value)` tuples.  These
 are both named tuples and the dictionary contents.
 
