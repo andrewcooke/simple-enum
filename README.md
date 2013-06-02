@@ -24,7 +24,7 @@ Getting Started
 ---------------
 
 Install `simple-enum` from
-[PyPI](https://pypi.python.org/pypi/simple-enum/0.0.0):
+[PyPI](https://pypi.python.org/pypi/simple-enum):
 
 ```sh
 easy_install simple-enum
