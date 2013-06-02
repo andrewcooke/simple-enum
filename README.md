@@ -6,6 +6,7 @@ A simpler Enum for Python.
 * [Getting Started](#getting-started)
   * [The Dictionary Point Of View](#the-dictionary-point-of-view)
   * [The Named Tuple Point Of View](#the-named-tuple-point-of-view)
+  * [That's It, Really](#thats-it-really)
 
 Getting Started
 ---------------
