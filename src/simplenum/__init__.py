@@ -149,10 +149,14 @@ class EnumMeta(type):
                                     for enum in cls._enums_by_value.values()))
         return cls
 
+    # Needed to avoid calling len() during creation?
+    def __bool__(cls): return True
+
     # Delegate dictionary methods.
     def __contains__(cls, name): return cls._enums.__contains__(name)
     def __iter__(cls): return cls._enums.__iter__()
     def __getitem__(cls, name): return cls._enums.__getitem__(name)
+    def __len__(cls): return cls._enums.__len__()
     def keys(cls): return cls._enums.keys()
     def values(cls): return cls._enums.values()
 
@@ -186,6 +190,13 @@ class EnumMeta(type):
         raise ValueError('Inconsistent name (%r) and value (%r)' %
                         (name, value))
 
+    def __str__(cls):
+        return ', '.join(cls.keys())
+
+    def __repr__(cls):
+        return '%s(%s)' % (cls.__name__,
+                           ', '.join('%s: %r' % (enum.name, enum.value)
+                                                 for enum in cls.items()))
 
 class Enum(namedtuple('Enum', 'name, value'), metaclass=EnumMeta):
     '''
