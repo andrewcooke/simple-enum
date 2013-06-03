@@ -60,11 +60,10 @@ ERR_MSG = 'Implicit scope support simple names only - no assignment or evaluatio
 
 class Explode(int):
 
-    @classmethod
     def __getattribute__(cls, item):
         raise ExplicitError(ERR_MSG)
-    def __call__(self, *args, **kwargs): pass
-
+    def __call__(self, *args, **kwargs):
+        raise ExplicitError(ERR_MSG)
 
 class ClassDict(OrderedDict):
     '''

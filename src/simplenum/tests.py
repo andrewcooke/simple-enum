@@ -131,7 +131,7 @@ class SafetyTest(TestCase):
 
         with self.assertRaises(ExplicitError):
             class Bad1(Enum):
-                a = sin(b)
+                a = sin(b) + 2
 
         with self.assertRaises(ExplicitError):
             class Bad1(Enum):
