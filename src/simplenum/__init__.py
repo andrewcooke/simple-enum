@@ -45,6 +45,7 @@ def bits():
         return 2 ** (count - 1)
     return value
 
+
 # Used to detect EnumMeta creation in the dict.  If Enum is false then we
 # disable implicit values.
 Enum = None
@@ -52,6 +53,17 @@ Enum = None
 def dunder(name):
     '''Test for special names.'''
     return name[:2] == name[-2:] == '__'
+
+
+class ExplicitError(Exception): pass
+ERR_MSG = 'Implicit scope support simple names only - no assignment or evaluation of expressions'
+
+class Explode(int):
+
+    @classmethod
+    def __getattribute__(cls, item):
+        raise ExplicitError(ERR_MSG)
+    def __call__(self, *args, **kwargs): pass
 
 
 class ClassDict(OrderedDict):
@@ -65,6 +77,7 @@ class ClassDict(OrderedDict):
         '''Setting `implicit` will provide default values from `values`.'''
         super().__init__()
         self.implicit = implicit
+        self.always_implicit = implicit
         self.values = values()
 
     def __enter__(self):
@@ -74,6 +87,7 @@ class ClassDict(OrderedDict):
     def __exit__(self, exc_type, exc_val, exc_tb):
         '''Disable implicit values on leaving a `with` context.'''
         self.implicit = False
+        if exc_val: raise ExplicitError(ERR_MSG) from exc_val
 
     def __getitem__(self, name):
         '''Provide an item from the dictionary.  Values are created if
@@ -81,6 +95,7 @@ class ClassDict(OrderedDict):
         if name not in self:
             if self.implicit and Enum and not dunder(name):
                 super().__setitem__(name, self.values(name))
+                if self.always_implicit: return Explode()
             elif name == 'implicit':
                 return self
         return super().__getitem__(name)
@@ -90,7 +105,7 @@ class ClassDict(OrderedDict):
         values (not dunders) if `implicit` is true.  This helps avoid
         confusion from expressions involving shadowed global names.'''
         if self.implicit and Enum and not dunder(name):
-            raise TypeError('Cannot use explicit value for %s' % name)
+            raise ExplicitError('Cannot use explicit value for %s' % name)
         return super().__setitem__(name, value)
 
     def split(self):

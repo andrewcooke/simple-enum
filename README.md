@@ -15,6 +15,7 @@ A simpler Enum for Python 3.
 * [Discussion](#discussion)
   * [Background](#background)
   * [Differences With Enum](#differences-with-enum)
+  * [The Danger Of Magic](#the-danger-of-magic)
   * [Technical Details](#technical-details)
   * [TYCDWTSE (TYCDWTSE)](#things-you-can-do-with-the-simpler-enum-that-you-cant-do-with-the-standard-enum)
   * [Credits](#credits)
@@ -250,6 +251,38 @@ the complexity of the standard Enum is justified and will, in time and with bug
 fixes, clutter this project.  But I hope that I have found something of value
 in the balance of features here, and that others will appreciate the view from
 this particular local maximum of the design space.
+
+### The Danger Of Magic
+
+One objection to the implicit value approach used here is that it can lead
+to confusing errors when global names are shadowed by implicit values.
+However, this can be ameliorated in almost all cases by careful implementation.
+
+In the case of implicit classes, like:
+
+```python
+>>> class Error1(Enum):
+...     a = sin(b)
+...
+ExplicitError: Implicit scope support simple names only - no assignment or evaluation of expressions
+```
+
+the values returned are not the implicit values used, but `Explode`
+instances which generate the given error on any access.  A similar error
+is triggered by assignment.
+
+The approach above, using a modified value, cannot be used for `with`
+contexts, where the value might be used later.  But `with` contexts provide
+a separate mechanism for detecting and modifying errors.  So here, for
+example, a `TypeError` is detected and replaced:
+
+```python
+>>> class Error2(Enum, implicit=False):
+...     with implicit:
+...         a = sin(b)
+...
+ExplicitError: Implicit scope support simple names only - no assignment or evaluation of expressions
+```
 
 ### Technical Details
 

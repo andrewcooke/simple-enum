@@ -1,6 +1,6 @@
 from pickle import loads, dumps
 from unittest import TestCase
-from simplenum import Enum, from_one, bits
+from simplenum import Enum, from_one, bits, ExplicitError
 
 
 class Examples(TestCase):
@@ -119,3 +119,47 @@ class MethodTest(TestCase):
             hen = 2, 'cluck'
 
         assert str(Animal.pig) == "pig has 4 legs and says oink", str(Animal.pig)
+
+
+class SafetyTest(TestCase):
+
+    def test_explode(self):
+
+        with self.assertRaises(ExplicitError):
+            class Bad1(Enum):
+                a = b
+
+        with self.assertRaises(ExplicitError):
+            class Bad1(Enum):
+                a = sin(b)
+
+        with self.assertRaises(ExplicitError):
+            class Bad1(Enum):
+                a = str(b)
+
+        with self.assertRaises(ExplicitError):
+            class Bad1(Enum):
+                a = b * c
+
+    def test_with(self):
+
+        with self.assertRaises(ExplicitError):
+            class Bad1(Enum, implicit=False):
+                with implicit:
+                    a = b
+
+        with self.assertRaises(ExplicitError):
+            class Bad1(Enum, implicit=False):
+                with implicit:
+                    a = sin(b)
+
+        with self.assertRaises(ExplicitError):
+            class Bad1(Enum, implicit=False):
+                with implicit:
+                    a = str(b)
+
+        with self.assertRaises(ExplicitError):
+            class Bad1(Enum, implicit=False):
+                with implicit:
+                    a = b * c
+
