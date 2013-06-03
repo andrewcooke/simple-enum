@@ -256,7 +256,7 @@ this particular local maximum of the design space.
 
 One objection to the implicit value approach used here is that it can lead
 to confusing errors when global names are shadowed by implicit values.
-However, this can be ameliorated in almost all cases by careful implementation.
+However, this can be ameliorated in most cases by careful implementation.
 
 In the case of implicit classes, like:
 
