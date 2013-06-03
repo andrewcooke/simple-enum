@@ -167,9 +167,9 @@ class EnumMeta(type):
     def __bool__(cls): return True
 
     # Delegate dictionary methods.
-    def __contains__(cls, name): return cls._enums.__contains__(name)
+    def __contains__(cls, name): return name in cls._enums_by_name # aliases
     def __iter__(cls): return cls._enums.__iter__()
-    def __getitem__(cls, name): return cls._enums.__getitem__(name)
+    def __getitem__(cls, name): return cls._enums_by_name[name].value # aliases
     def __len__(cls): return cls._enums.__len__()
     def keys(cls): return cls._enums.keys()
     def values(cls): return cls._enums.values()

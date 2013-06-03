@@ -200,8 +200,10 @@ tuple:
 ```python
 >>> MulitlingualWeekday.lunes
 MulitlingualWeekday(name='monday', value=1)
->>> MulitlingualWeekday['martes']
+>>> MulitlingualWeekday('martes')
 MulitlingualWeekday(name='tuesday', value=2)
+>>> MulitlingualWeekday['miercoles']
+3
 ```
 
 Discussion

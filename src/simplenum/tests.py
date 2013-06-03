@@ -81,6 +81,9 @@ class Examples(TestCase):
 
         assert str(MulitlingualWeekday.lunes) == "MulitlingualWeekday(name='monday', value=1)", str(MulitlingualWeekdays.lunes)
         assert str(MulitlingualWeekday('martes')) == "MulitlingualWeekday(name='tuesday', value=2)", str(MulitlingualWeekdays('lunes'))
+        assert MulitlingualWeekday['miercoles'] == 3, MulitlingualWeekday['miercoles']
+        assert 'jueves' in MulitlingualWeekday
+        assert len(MulitlingualWeekday) == 7, len(MulitlingualWeekday)
 
 
 class Pickle(Enum):
